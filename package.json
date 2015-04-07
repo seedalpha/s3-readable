@@ -1,0 +1,32 @@
+{
+  "name": "s3-readable",
+  "version": "1.0.0",
+  "description": "Read S3 files as streams",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -R spec -t 10000 -b"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:seedalpha/s3-readable.git"
+  },
+  "keywords": [
+    "s3",
+    "stream",
+    "readable",
+    "read",
+    "pipe"
+  ],
+  "author": "Vladimir Popov <rusintez@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/seedalpha/s3-readable/issues"
+  },
+  "homepage": "https://github.com/seedalpha/s3-readable",
+  "devDependencies": {
+    "mocha": "^2.2.1"
+  },
+  "dependencies": {
+    "through2": "^0.6.3"
+  }
+}
