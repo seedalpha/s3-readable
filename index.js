@@ -9,8 +9,8 @@ exports = module.exports = function(s3, options) {
     createReadStream: function(params) {
       var request = s3.getObject(params);
       var stream = through({ highWaterMark: options.highWaterMark });
-      
-      request.on('httpHeaders', function(status, headers) {
+
+      request.on('httpHeaders', function(status, headers, response) {
         if (status >= 300) {
           return stream.emit('error', { statusCode: status });
         }
@@ -22,11 +22,18 @@ exports = module.exports = function(s3, options) {
     			Key: params.Key,
     			Body: stream
         });
+        
+        response.httpResponse.createUnbufferedStream().pipe(stream);
       });
       
-      var readable = request.createReadStream();
+      request.on('error', function(err) {
+        stream.emit('error', err);
+      });
       
-      readable.pipe(stream);
+      request.send(function(err) {
+        if (!err) return;
+        stream.emit('error', err);
+      });
       
       return stream;
     }
